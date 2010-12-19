@@ -32,12 +32,12 @@
         <configuration>
           <resolver>p2</resolver>
           <target>
-	    <!-- g:a:v:c of our target platform -->
+            <!-- g:a:v:c of our target platform -->
             <artifact>
               <groupId>com.nextinstruction.dummy</groupId>
               <artifactId>target-platform</artifactId>
               <version>1.0.0-SNAPSHOT</version>
-              <classifier>helios</classifier>
+              <classifier>galileo</classifier>
             </artifact>
           </target>
           <!-- ??? -->

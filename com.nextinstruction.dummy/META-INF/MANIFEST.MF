@@ -9,3 +9,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Export-Package: com.nextinstruction.dummy,
+ com.nextinstruction.dummy.model,
+ com.nextinstruction.dummy.views
