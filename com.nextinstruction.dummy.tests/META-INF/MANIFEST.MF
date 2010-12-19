@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests
+Bundle-SymbolicName: com.nextinstruction.dummy.tests
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: NEXTINSTRUCTION
+Fragment-Host: com.nextinstruction.dummy;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit4
+Import-Package: org.junit

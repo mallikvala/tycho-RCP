@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <version>1.0.0-SNAPSHOT</version>
+  <groupId>com.nextinstruction.dummy</groupId>
+  <artifactId>parent</artifactId>
+  <packaging>pom</packaging>
+  <name>RCP Parent</name>
+  <properties>
+    <tycho-version>0.10.0</tycho-version>
+    <tycho-groupid>org.sonatype.tycho</tycho-groupid>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <modules>
+    <!-- our example plugin -->
+    <module>com.nextinstruction.dummy</module>
+    <!-- the following is a stand-alone plugin that contains our Application -->
+    <module>com.nextinstruction.dummy.rcp</module>
+    <!-- since we are feature-based, we create a feature to hold our plugins -->
+    <module>com.nextinstruction.dummy.feature</module>
+    <!-- the sub-module below holds our .product file and the final p2 repo that gets created -->
+    <module>com.nextinstruction.dummy.eclipse-repo</module>
+    <!-- here we store our target platform definition -->
+    <module>target-platform</module>
+  </modules>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>${tycho-groupid}</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <resolver>p2</resolver>
+          <target>
+	    <!-- g:a:v:c of our target platform -->
+            <artifact>
+              <groupId>com.nextinstruction.dummy</groupId>
+              <artifactId>target-platform</artifactId>
+              <version>1.0.0-SNAPSHOT</version>
+              <classifier>helios</classifier>
+            </artifact>
+          </target>
+          <!-- ??? -->
+          <ignoreTychoRepositories>true</ignoreTychoRepositories>
+          <!-- we build 2 versions, win32 and linux -->
+          <environments>
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86</arch>
+            </environment>
+          </environments>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>${tycho-groupid}</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

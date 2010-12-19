@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.nextinstruction.dummy.feature_1.0.0.qualifier.jar" id="com.nextinstruction.dummy.feature" version="1.0.0.qualifier">
+      <category name="base"/>
+   </feature>
+   <category-def name="base" label="Base">
+      <description>
+         Base Dummy RCP install
+      </description>
+   </category-def>
+</site>
