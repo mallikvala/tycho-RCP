@@ -1,10 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests
-Bundle-SymbolicName: com.nextinstruction.dummy.tests
+Bundle-SymbolicName: com.nextinstruction.dummy.tests;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: NEXTINSTRUCTION
-Fragment-Host: com.nextinstruction.dummy;bundle-version="1.0.0"
+Fragment-Host: com.nextinstruction.dummy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.junit4
-Import-Package: org.junit
+Import-Package: org.junit;version="4.5.0"

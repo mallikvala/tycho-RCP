@@ -14,6 +14,8 @@
   <modules>
     <!-- our example plugin -->
     <module>com.nextinstruction.dummy</module>
+    <!-- pde junit tests for out plugin -->
+    <module>com.nextinstruction.dummy.tests</module>
     <!-- the following is a stand-alone plugin that contains our Application -->
     <module>com.nextinstruction.dummy.rcp</module>
     <!-- since we are feature-based, we create a feature to hold our plugins -->
