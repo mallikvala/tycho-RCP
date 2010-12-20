@@ -12,6 +12,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <modules>
+    <!-- headless osgi compliant version of emma cct -->
+    <module>eclemma.runtime.equinox</module>
     <!-- our example plugin -->
     <module>com.nextinstruction.dummy</module>
     <!-- pde junit tests for out plugin -->
@@ -27,6 +29,7 @@
   </modules>
   <build>
     <plugins>
+      <!-- configure out target platform -->
       <plugin>
         <groupId>${tycho-groupid}</groupId>
         <artifactId>target-platform-configuration</artifactId>
@@ -34,7 +37,7 @@
         <configuration>
           <resolver>p2</resolver>
           <target>
-            <!-- g:a:v:c of our target platform -->
+            <!-- g:a:v:c of our custom target platform -->
             <artifact>
               <groupId>com.nextinstruction.dummy</groupId>
               <artifactId>target-platform</artifactId>
@@ -65,6 +68,82 @@
         <version>${tycho-version}</version>
         <extensions>true</extensions>
       </plugin>
+      <!-- set the default compiler options for maven osgi compiler -->
+      <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>maven-osgi-compiler-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+
+
+
+    <!-- setup test env for coverage tests -->
+    <profiles>
+      <profile>
+        <id>coverage</id>
+        <activation>
+          <property>
+            <name>coverage</name>
+          </property>
+        </activation>
+        <properties>
+          <emma.session.out.file>${project.build.directory}/emma/${project.artifactId}.es</emma.session.out.file>
+          <emma.filter>com.nextinstruction.*</emma.filter>
+          <!-- can we read this from a file or generate it -->
+          <eclemma.instrument.bundles>com.nextinstruction.dummy</eclemma.instrument.bundles>
+        </properties>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>build-helper-maven-plugin</artifactId>
+              <version>1.5</version>
+              <executions>
+                <execution>
+                  <id>attach-artifacts</id>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>attach-artifact</goal>
+                  </goals>
+                  <configuration>
+                    <artifacts>
+                      <artifact>
+                        <file>${emma.session.out.file}</file>
+                        <type>es</type>
+                      </artifact>
+                    </artifacts>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
+              <groupId>org.sonatype.tycho</groupId>
+              <artifactId>maven-osgi-test-plugin</artifactId>
+              <version>${tycho-version}</version>
+              <configuration>
+                <systemProperties combine.children="append">
+                  <eclemma.help>true</eclemma.help>
+                  <emma.session.out.file>${emma.session.out.file}</emma.session.out.file>
+                  <emma.filter>${emma.filter}</emma.filter>
+                  <eclemma.instrument.bundles>${eclemma.instrument.bundles}</eclemma.instrument.bundles>
+                </systemProperties>
+                <frameworkExtensions>
+                  <frameworkExtension>
+                    <groupId>emma</groupId>
+                    <artifactId>eclemma.runtime.equinox</artifactId>
+                    <version>1.1.0.200908261008</version>
+                  </frameworkExtension>
+                </frameworkExtensions>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+    </profiles>
 </project>
